@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <rect x="95" y="95" width="309" height="309" style="fill: rgb(114, 144, 255); paint-order: fill markers; stroke: rgb(114, 144, 255);" transform="matrix(1, 0, 0, 1, 0, -1.4210854715202004e-14)"/>
+  <path style="paint-order: fill; fill: rgb(0, 8, 83);" d="M 214 178 H 332 A 36 36 0 0 1 368 214 V 312 A 56 56 0 0 1 312 368 H 214 A 36 36 0 0 1 178 332 V 214 A 36 36 0 0 1 214 178 Z" transform="matrix(1, 0, 0, 1, 0, -1.4210854715202004e-14)" bx:shape="rect 178 178 190 190 36 36 56 36 1@9aed703b"/>
+  <path style="fill: rgb(39, 56, 204);" d="M 258.513 95 H 334.939 V 178 H 217.513 V 136 A 41 41 0 0 1 258.513 95 Z" transform="matrix(1, 0, 0, 1, 0, -1.4210854715202004e-14)" bx:shape="rect 217.513 95 117.426 83 41 0 0 0 1@0db41610"/>
+  <path style="fill: rgb(39, 56, 204);" d="M 368 215 H 386.5 A 17.5 17.5 0 0 1 404 232.5 V 294.748 H 368 V 215 Z" transform="matrix(1, 0, 0, 1, 0, -1.4210854715202004e-14)" bx:shape="rect 368 215 36 79.748 0 17.5 0 0 1@72f05fc8"/>
+  <path style="fill: rgb(39, 56, 204);" d="M 215 368 H 315.192 V 386.5 A 17.5 17.5 0 0 1 297.692 404 H 215 V 368 Z" transform="matrix(1, 0, 0, 1, 0, -1.4210854715202004e-14)" bx:shape="rect 215 368 100.192 36 0 0 17.5 0 1@7423efa4"/>
+  <path style="fill: rgb(39, 56, 204);" d="M 95 215 H 178 V 324.47 H 136 A 41 41 0 0 1 95 283.47 V 215 Z" transform="matrix(1, 0, 0, 1, 0, -1.4210854715202004e-14)" bx:shape="rect 95 215 83 109.47 0 0 0 41 1@737c24b1"/>
+</svg>

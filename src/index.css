@@ -1,0 +1,26 @@
+@import url('https://fonts.upset.dev/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    background: var(--md-sys-color-surface);
+}
+
+html,
+body {
+    height: 100%;
+}
+
+#root {
+    height:100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
