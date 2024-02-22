@@ -14,7 +14,7 @@ import {
 /**
  * Set Theme
  */
-applyThemeForSoda('#7272FF')
+applyThemeForSoda(localStorage.getItem('soda-theme-color-hex') || '#ffffff')
 
 const pages: RouteObject[] = Object.entries(
     import.meta.glob('./pages/*.tsx')

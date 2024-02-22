@@ -1,0 +1,33 @@
+name: Deploy to Surge.sh
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  # cache: 'npm'
+
+            - name: Install and Build
+              run: |
+                  npm install
+                  npm run build
+                  cp dist/index.html dist/200.html
+
+            - name: Deploy
+              uses: YieldRay/deploy-to-surge-action@v2
+              with:
+                  folder: dist
+                  domain: mdtoys.surge.sh
+                  token: ${{ secrets.SURGE_TOKEN }}

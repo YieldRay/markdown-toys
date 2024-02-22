@@ -24,7 +24,7 @@ export default function MD2HTML() {
         copy(html)
         setSnackbarOpen(true)
         clearTimeout(timerRef.current)
-        timerRef.current = setTimeout(() => setSnackbarOpen(false), 3000)
+        timerRef.current = window.setTimeout(() => setSnackbarOpen(false), 3000)
     }
 
     return (
