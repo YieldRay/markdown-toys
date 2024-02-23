@@ -46,7 +46,7 @@ export default function HTML2MD() {
         <div className="h-full grid grid-rows-[auto_1fr]">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
                 <TextField
-                    className="flex-1"
+                    className="flex-1 w-full"
                     variant="outlined"
                     labelText="URL"
                     value={url}

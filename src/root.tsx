@@ -32,7 +32,7 @@ import {
     mdiInformationOutline,
 } from '@mdi/js'
 import { Icon } from '@mdi/react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useLocation } from 'react-router-dom'
 import ChangeTheme from './components/ChangeTheme'
 
 export default function Root({
@@ -44,6 +44,33 @@ export default function Root({
     const fullscreenRef = useRef(document.documentElement)
     const [fullscreen, setFullscreen] = useFullscreen(fullscreenRef)
     const [dialogOpen, setDialogOpen] = useState(false)
+    const location = useLocation()
+
+    function DrawerItem({
+        to,
+        path,
+        children,
+    }: {
+        to: string
+        path: string
+        children: React.ReactNode
+    }) {
+        return (
+            <Link
+                to={to}
+                onClick={() => {
+                    if (!isScreenExpanded) setOpen(false)
+                }}
+            >
+                <NavigationDrawerItem
+                    icon={<Icon path={path} />}
+                    active={location.pathname === to}
+                >
+                    {children}
+                </NavigationDrawerItem>
+            </Link>
+        )
+    }
 
     return (
         <>
@@ -105,50 +132,20 @@ export default function Root({
                     open={open}
                     onScrimClick={() => setOpen(false)}
                     headline="功能"
-                    onClick={(e: Event) => {
-                        if (!isScreenExpanded) {
-                            const el = e.target as HTMLElement
-
-                            if (
-                                el.classList.contains(
-                                    'sd-navigation_drawer_item'
-                                )
-                            ) {
-                                setOpen(false)
-                            }
-                        }
-                    }}
                 >
-                    <Link to="/md2html">
-                        <NavigationDrawerItem
-                            icon={<Icon path={mdiLanguageMarkdown}></Icon>}
-                        >
-                            Markdown 转 HTML
-                        </NavigationDrawerItem>
-                    </Link>
-                    <Link to="/html2md">
-                        <NavigationDrawerItem
-                            icon={
-                                <Icon path={mdiLanguageMarkdownOutline}></Icon>
-                            }
-                        >
-                            HTML 转 Markdown
-                        </NavigationDrawerItem>
-                    </Link>
-                    <Link to="/render">
-                        <NavigationDrawerItem
-                            icon={<Icon path={mdiFormatHeaderPound}></Icon>}
-                        >
-                            渲染 Markdown
-                        </NavigationDrawerItem>
-                    </Link>
-                    <Link to="/readability">
-                        <NavigationDrawerItem
-                            icon={<Icon path={mdiRead}></Icon>}
-                        >
-                            网页可读化
-                        </NavigationDrawerItem>
-                    </Link>
+                    <DrawerItem to="/md2html" path={mdiLanguageMarkdown}>
+                        Markdown 转 HTML
+                    </DrawerItem>
+                    <DrawerItem to="/html2md" path={mdiLanguageMarkdownOutline}>
+                        HTML 转 Markdown
+                    </DrawerItem>
+                    <DrawerItem to="/render" path={mdiFormatHeaderPound}>
+                        渲染 Markdown
+                    </DrawerItem>
+                    <DrawerItem to="/readability" path={mdiRead}>
+                        网页可读化
+                    </DrawerItem>
+
                     <Divider />
                     <small>
                         Made by <a href="https://ray.deno.dev">YieldRay</a>
