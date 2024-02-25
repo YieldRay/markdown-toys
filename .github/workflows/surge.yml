@@ -7,8 +7,12 @@ on:
             - main
 
 jobs:
-    deploy:
+    build-and-deploy:
         runs-on: ubuntu-latest
+        concurrency: ci-${{ github.ref }}
+        environment:
+            name: preview
+            url: https://${{ steps.deployment.outputs.preview }}
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -26,8 +30,9 @@ jobs:
                   cp dist/index.html dist/200.html
 
             - name: Deploy
-              uses: YieldRay/deploy-to-surge-action@v2
+              id: deployment
+              uses: YieldRay/deploy-to-surge-action@v3
               with:
                   folder: dist
-                  domain: mdtoys.surge.sh
                   token: ${{ secrets.SURGE_TOKEN }}
+                  domain: md.naoh.eu.org
