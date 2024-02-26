@@ -17,5 +17,8 @@ export default defineConfig({
             execSync('git rev-parse HEAD', { encoding: 'utf8' })
         ),
         __PKG__: JSON.stringify(pkg),
+        'process.env': {
+            ROUTER: process.env.ROUTER,
+        },
     },
 })

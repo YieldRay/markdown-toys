@@ -33,12 +33,15 @@ export default function HTML2MD() {
     )
     const handleClick = () => setCurrentURL(url)
     const handlePreview = () => {
+        handleClick()
         setState('preview')
     }
     const handleToHTML = () => {
+        handleClick()
         setState('html')
     }
     const handleToMarkdown = () => {
+        handleClick()
         setState('markdown')
     }
 

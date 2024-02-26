@@ -16,5 +16,5 @@ export function RenderHTML({ html }: { html: string }) {
         }
     }, [html, isReady])
 
-    return <iframe className="w-full h-full" src="/iframe.html" ref={ref} />
+    return <iframe className="w-full h-full" src="./iframe.html" ref={ref} />
 }

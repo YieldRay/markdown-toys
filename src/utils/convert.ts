@@ -10,6 +10,7 @@ import rehypeStringify from 'rehype-stringify'
 export async function html2md(html: string) {
     const file = await unified()
         .use(rehypeParse)
+        .use(remarkGfm)
         .use(rehypeRemark)
         .use(remarkStringify)
         .process(html)
