@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Blockquote, CircularProgressIndicator } from 'soda-material'
 
 export function UnwrapPromise<T = unknown>({
     promise,
@@ -6,15 +7,19 @@ export function UnwrapPromise<T = unknown>({
     pending,
     reject,
 }: {
-    promise: Promise<T>
+    promise: Promise<T> | T
     pending?: () => React.ReactNode
     resolve?: (value: T) => React.ReactNode
     reject?: (reason: unknown) => React.ReactNode
 }) {
     const [state, setState] = useState<'pending' | 'rejected' | 'resolved'>(
-        'pending'
+        promise instanceof Promise ? 'pending' : 'resolved'
     )
     useEffect(() => {
+        if (!(promise instanceof Promise)) {
+            return
+        }
+
         promise.then(
             (value) => {
                 setValue(value)
@@ -26,14 +31,30 @@ export function UnwrapPromise<T = unknown>({
             }
         )
     }, [promise])
-    const [value, setValue] = useState<T>()
+
+    const [value, setValue] = useState<T | undefined>(
+        promise instanceof Promise ? undefined : promise
+    )
+
     const [reason, setReason] = useState<unknown>()
 
     switch (state) {
         case 'pending':
-            return pending?.()
+            return pending ? (
+                pending()
+            ) : (
+                <div className="w-full h-full grid place-items-center">
+                    <CircularProgressIndicator />
+                </div>
+            )
         case 'rejected':
-            return reject?.(reason)
+            return reject ? (
+                reject(reason)
+            ) : (
+                <div>
+                    <Blockquote variant="error">{String(reason)}</Blockquote>
+                </div>
+            )
         case 'resolved':
             return resolve?.(value!)
     }

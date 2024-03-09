@@ -5,7 +5,7 @@ import {
     Blockquote,
     Button,
     Card,
-    CircularProgressIndicator,
+    Checkbox,
     IconRippleButton,
     LinearProgressIndicator,
     Scrim,
@@ -16,34 +16,42 @@ import { Portal } from 'soda-material/dist/utils/Portal'
 import useSWR from 'swr'
 import { match } from 'ts-pattern'
 import { withGfmHTML } from '../utils/render'
-import { html2md } from '../utils/convert'
+import { html2md, md2html } from '../utils/convert'
+import translate from '../utils/translate'
 import { UnwrapPromise } from '../components/Promise'
 import { RenderHTML } from '../components/RenderHTML'
 
+const initURL = 'https://example.net/'
+
 export default function HTML2MD() {
-    const [url, setURL] = useState('https://ray.deno.dev')
-    const [currentURL, setCurrentURL] = useState<string | undefined>(
-        'https://ray.deno.dev'
-    )
+    const [url, setURL] = useState(initURL)
+    const [currentURL, setCurrentURL] = useState<string | undefined>(initURL)
     const [state, setState] = useState<'html' | 'markdown' | 'preview'>(
         'markdown'
     )
+    const [isTranslate, setTranslate] = useState(false)
     const { data, error, isLoading } = useSWR(currentURL, () =>
         readabilityFromURL(currentURL!)
     )
-    const handleClick = () => setCurrentURL(url)
+
     const handlePreview = () => {
-        handleClick()
+        setCurrentURL(url)
         setState('preview')
     }
     const handleToHTML = () => {
-        handleClick()
+        setCurrentURL(url)
         setState('html')
     }
     const handleToMarkdown = () => {
-        handleClick()
+        setCurrentURL(url)
         setState('markdown')
     }
+
+    const key = new URLSearchParams({
+        url: currentURL || '',
+        state,
+        t: String(isTranslate),
+    }).toString()
 
     return (
         <div className="h-full grid grid-rows-[auto_1fr]">
@@ -58,12 +66,23 @@ export default function HTML2MD() {
                     trailingIcon={
                         <IconRippleButton
                             path={mdiClose}
-                            onClick={() => setURL('https://')}
+                            onClick={() => setURL('')}
                         />
                     }
-                    onKeyUp={(e) => e.key === 'Enter' && handleClick()}
+                    onKeyUp={(e) => e.key === 'Enter' && setCurrentURL(url)}
                 />
-                <div className="flex gap-1">
+                <div className="flex gap-1 items-center">
+                    <div
+                        className="cursor-pointer select-none flex items-center gap-1"
+                        onClick={() => setTranslate((x) => !x)}
+                    >
+                        <Checkbox checked={isTranslate} />
+
+                        <span className="inline-flex flex-col text-xs">
+                            <small>中文翻译</small>
+                            <small>(Slow)</small>
+                        </span>
+                    </div>
                     <Button variant="filled" onClick={handlePreview}>
                         Preview
                     </Button>
@@ -92,21 +111,23 @@ export default function HTML2MD() {
             )}
 
             {error && (
-                <Blockquote variant="error" close>
-                    {String(error)}
-                </Blockquote>
+                <div>
+                    <Blockquote variant="error" close>
+                        {String(error)}
+                    </Blockquote>
+                </div>
             )}
 
             {data &&
                 match(state)
                     .with('markdown', () => (
                         <UnwrapPromise
-                            promise={html2md(data.content)}
-                            pending={() => (
-                                <div className="w-full h-full grid place-items-center">
-                                    <CircularProgressIndicator />
-                                </div>
-                            )}
+                            key={key}
+                            promise={
+                                isTranslate
+                                    ? html2md(data.content).then(translate)
+                                    : html2md(data.content)
+                            }
                             resolve={(value) => (
                                 <TextField
                                     readOnly
@@ -118,15 +139,39 @@ export default function HTML2MD() {
                         />
                     ))
                     .with('html', () => (
-                        <TextField
-                            readOnly
-                            className="w-full h-full"
-                            textarea
-                            value={withGfmHTML(data.content)}
+                        <UnwrapPromise
+                            key={key}
+                            promise={
+                                isTranslate
+                                    ? html2md(data.content)
+                                          .then(translate)
+                                          .then(md2html)
+                                    : data.content
+                            }
+                            resolve={(value) => (
+                                <TextField
+                                    readOnly
+                                    className="w-full h-full"
+                                    textarea
+                                    value={withGfmHTML(value)}
+                                />
+                            )}
                         />
                     ))
                     .with('preview', () => (
-                        <RenderHTML html={withGfmHTML(data.content)} />
+                        <UnwrapPromise
+                            key={key}
+                            promise={
+                                isTranslate
+                                    ? html2md(data.content)
+                                          .then(translate)
+                                          .then(md2html)
+                                    : data.content
+                            }
+                            resolve={(value) => (
+                                <RenderHTML html={withGfmHTML(value)} />
+                            )}
+                        />
                     ))
                     .exhaustive()}
         </div>

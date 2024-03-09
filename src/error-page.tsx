@@ -10,9 +10,11 @@ export default function ErrorPage() {
     return (
         <div className="container p-4 mx-auto">
             <Card className="min-h-[90vh] p-4" disabled>
-                <Blockquote variant="error" close>
-                    Sorry, an unexpected error has occurred.
-                </Blockquote>
+                <div>
+                    <Blockquote variant="error" close>
+                        Sorry, an unexpected error has occurred.
+                    </Blockquote>
+                </div>
                 <div className="grid place-items-center min-h-[50vh]">
                     <div className="flex flex-col items-center gap-8">
                         <p className="text-3xl">
