@@ -1,6 +1,6 @@
 import { mdiClose, mdiWeb } from '@mdi/js'
 import Icon from '@mdi/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Blockquote,
     Button,
@@ -20,16 +20,23 @@ import { html2md, md2html } from '../utils/convert'
 import translate from '../utils/translate'
 import { UnwrapPromise } from '../components/Promise'
 import { RenderHTML } from '../components/RenderHTML'
+import { useSearchParams } from 'react-router-dom'
 
-const initURL = 'https://example.net/'
+const INIT_URL = 'https://example.net/'
+const STATE = ['html', 'markdown', 'preview'] as const
 
 export default function HTML2MD() {
-    const [url, setURL] = useState(initURL)
-    const [currentURL, setCurrentURL] = useState<string | undefined>(initURL)
-    const [state, setState] = useState<'html' | 'markdown' | 'preview'>(
-        'markdown'
-    )
-    const [isTranslate, setTranslate] = useState(false)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const _url = searchParams.has('url') ? searchParams.get('url')! : INIT_URL
+    const _state = STATE.includes(searchParams.get('state') as any)
+        ? (searchParams.get('state') as (typeof STATE)[number])
+        : 'markdown'
+    const _translate = searchParams.get('translate') === 'true'
+
+    const [url, setURL] = useState(_url)
+    const [currentURL, setCurrentURL] = useState<string | undefined>(_url)
+    const [state, setState] = useState<(typeof STATE)[number]>(_state)
+    const [isTranslate, setTranslate] = useState(_translate)
     const { data, error, isLoading } = useSWR(currentURL, () =>
         readabilityFromURL(currentURL!)
     )
@@ -50,8 +57,12 @@ export default function HTML2MD() {
     const key = new URLSearchParams({
         url: currentURL || '',
         state,
-        t: String(isTranslate),
+        translate: String(isTranslate),
     }).toString()
+
+    useEffect(() => {
+        if (searchParams.toString() !== key) setSearchParams(key)
+    }, [searchParams, setSearchParams, key])
 
     return (
         <div className="h-full grid grid-rows-[auto_1fr]">
@@ -78,7 +89,7 @@ export default function HTML2MD() {
                     >
                         <Checkbox checked={isTranslate} />
 
-                        <span className="inline-flex flex-col text-xs">
+                        <span className="inline-flex flex-col text-xs text-balance">
                             <small>中文翻译</small>
                             <small>(Slow)</small>
                         </span>
@@ -87,10 +98,14 @@ export default function HTML2MD() {
                         Preview
                     </Button>
                     <Button variant="tonal" onClick={handleToHTML}>
-                        To HTML
+                        转HTML
                     </Button>
-                    <Button variant="tonal" onClick={handleToMarkdown}>
-                        To Markdown
+                    <Button
+                        variant="tonal"
+                        onClick={handleToMarkdown}
+                        className="break-none"
+                    >
+                        转Markdown
                     </Button>
                 </div>
             </div>
