@@ -24,7 +24,7 @@
         "remark-parse": "^11.0.0",
         "remark-rehype": "^11.1.0",
         "remark-stringify": "^11.0.0",
-        "soda-material": "^0.0.25",
+        "soda-material": "^0.0.26",
         "swr": "^2.2.5",
         "ts-pattern": "^5.0.8",
         "unified": "^11.0.4"
