@@ -22,3 +22,13 @@ export async function readabilityFromURL(url: string) {
 
     return readability(doc)
 }
+
+export function isURL(url?: string) {
+    if (!url) return false
+    try {
+        new URL(url)
+        return true
+    } catch {
+        return false
+    }
+}
