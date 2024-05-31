@@ -107,14 +107,14 @@ export default function HTML2MD() {
                             Preview
                         </Button>
                         <Button variant="tonal" onClick={handleToHTML}>
-                            转HTML
+                            to HTML
                         </Button>
                         <Button
                             variant="tonal"
                             onClick={handleToMarkdown}
                             className="break-none"
                         >
-                            转Markdown
+                            to Markdown
                         </Button>
                     </div>
                 </div>

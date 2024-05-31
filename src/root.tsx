@@ -131,24 +131,53 @@ export default function Root({
                     modal={!isScreenExpanded}
                     open={open}
                     onScrimClick={() => setOpen(false)}
-                    headline="功能"
+                    headline="Navigation"
                 >
                     <DrawerItem to="/md2html" path={mdiLanguageMarkdown}>
-                        Markdown 转 HTML
+                        Markdown to HTML
                     </DrawerItem>
                     <DrawerItem to="/html2md" path={mdiLanguageMarkdownOutline}>
-                        HTML 转 Markdown
+                        HTML to Markdown
                     </DrawerItem>
                     <DrawerItem to="/render" path={mdiFormatHeaderPound}>
-                        渲染 Markdown
+                        Render Markdown
                     </DrawerItem>
                     <DrawerItem to="/readability" path={mdiRead}>
-                        网页可读化
+                        Website Readability
                     </DrawerItem>
 
                     <Divider />
                     <small>
-                        Made by <a href="https://ray.deno.dev">YieldRay</a>
+                        Made by{' '}
+                        <a
+                            href="https://ray.deno.dev"
+                            target="_blank"
+                            className="text-blue-500"
+                        >
+                            YieldRay
+                        </a>
+                    </small>
+                    <br />
+                    <small>
+                        Powered by{' '}
+                        <a
+                            href="https://github.com/YieldRay/soda"
+                            target="_blank"
+                            className="text-blue-500"
+                        >
+                            soda-material
+                        </a>
+                    </small>
+                    <br />
+                    <small>
+                        Source code available at{' '}
+                        <a
+                            href="https://github.com/YieldRay/markdown-toys"
+                            target="_blank"
+                            className="text-blue-500"
+                        >
+                            Github
+                        </a>
                     </small>
                 </NavigationDrawer>
                 <main className="flex-1 h-full p-4 overflow-auto">
