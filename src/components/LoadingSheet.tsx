@@ -31,7 +31,10 @@ export function SimpleError({ error }: { error?: unknown }) {
         Boolean(error) && (
             <div>
                 <Blockquote variant="error" close>
-                    <div>无法恢复的错误！请尝试刷新页面</div>
+                    <div>
+                        An irreparable error has occurred! Kindly attempt to
+                        refresh the page.
+                    </div>
                     <div>{String(error)}</div>
                 </Blockquote>
             </div>

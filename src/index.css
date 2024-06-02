@@ -24,3 +24,11 @@ body {
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: var(--md-sys-color-outline);
+}

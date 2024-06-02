@@ -10,11 +10,12 @@ import { withGfmHTML } from '../utils/render'
 export default function MD2HTML() {
     const [isAutoSync, setAutoSync] = useState(true)
     const [markdown, setMarkdown] = useState(
-        `# Markdown here! \n${'```js'}\nconsole.log("hello, world!");\n${'```'}`
+        `# Markdown here! \n${'```js'}\nfunction hello() {\n    console.log("hello, world!"); \n}\n${'```'}`
     )
     const [rawHtml, setHtml] = useState('')
     const html = withGfmHTML(rawHtml)
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleConvert = useCallback(async () => {
         setHtml(await md2html(markdown, { allowDangerousHtml: false }))
     }, [markdown])
@@ -37,7 +38,7 @@ export default function MD2HTML() {
             <TextField
                 textarea
                 labelText="Markdown"
-                placeholder="此处输入Markdown"
+                placeholder="Enter Markdown here"
                 value={markdown}
                 onChange={setMarkdown}
             />

@@ -24,7 +24,7 @@ export default function HTML2MD() {
         copy(markdown)
         setSnackbarOpen(true)
         clearTimeout(timerRef.current)
-        timerRef.current = window.setTimeout(() => setSnackbarOpen(false), 3000)  
+        timerRef.current = window.setTimeout(() => setSnackbarOpen(false), 3000)
     }
 
     return (
@@ -32,7 +32,7 @@ export default function HTML2MD() {
             <TextField
                 textarea
                 labelText="HTML"
-                placeholder="此处输入HTML"
+                placeholder="Enter HTML here"
                 value={html}
                 onChange={setHtml}
             />
@@ -67,7 +67,7 @@ export default function HTML2MD() {
             <TextField
                 textarea
                 labelText="Markdown"
-                placeholder="此处为生成的Markdown"
+                placeholder="Generated Markdown"
                 value={markdown}
             />
 

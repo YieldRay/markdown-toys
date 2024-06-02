@@ -1,7 +1,12 @@
 import { mdiClose, mdiWeb } from '@mdi/js'
 import Icon from '@mdi/react'
 import { useEffect, useState } from 'react'
-import { Button, Checkbox, IconRippleButton, TextField } from 'soda-material'
+import {
+    Checkbox,
+    IconRippleButton,
+    SegmentedButton,
+    TextField,
+} from 'soda-material'
 import useSWRImmutable from 'swr/immutable'
 import useSWR from 'swr'
 import { match } from 'ts-pattern'
@@ -50,18 +55,6 @@ export default function HTML2MD() {
     const updateURL = () => {
         if (url !== currentURL) setCurrentURL(url)
     }
-    const handlePreview = () => {
-        updateURL()
-        setState('preview')
-    }
-    const handleToHTML = () => {
-        updateURL()
-        setState('html')
-    }
-    const handleToMarkdown = () => {
-        updateURL()
-        setState('markdown')
-    }
 
     useEffect(() => {
         const key = new URLSearchParams({
@@ -103,19 +96,27 @@ export default function HTML2MD() {
                                 <small>(Slow)</small>
                             </span>
                         </div>
-                        <Button variant="filled" onClick={handlePreview}>
-                            Preview
-                        </Button>
-                        <Button variant="tonal" onClick={handleToHTML}>
-                            to HTML
-                        </Button>
-                        <Button
-                            variant="tonal"
-                            onClick={handleToMarkdown}
-                            className="break-none"
-                        >
-                            to Markdown
-                        </Button>
+                        <SegmentedButton
+                            items={[
+                                {
+                                    value: 'preview',
+                                    label: 'Preview',
+                                },
+                                {
+                                    value: 'html',
+                                    label: 'HTML',
+                                },
+                                {
+                                    value: 'markdown',
+                                    label: 'Markdown',
+                                },
+                            ]}
+                            value={state}
+                            onChange={(value) => {
+                                updateURL()
+                                setState(value as any)
+                            }}
+                        />
                     </div>
                 </div>
             }

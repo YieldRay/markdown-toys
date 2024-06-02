@@ -32,7 +32,7 @@ export default function MD2HTML() {
             <TextField
                 textarea
                 labelText="Markdown"
-                placeholder="此处输入Markdown"
+                placeholder="Enter Markdown here"
                 value={markdown}
                 onChange={setMarkdown}
             />
@@ -67,7 +67,7 @@ export default function MD2HTML() {
             <TextField
                 textarea
                 labelText="HTML"
-                placeholder="此处为生成的HTML"
+                placeholder="Generated HTML"
                 value={html}
             />
 
