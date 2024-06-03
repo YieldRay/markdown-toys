@@ -1,31 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
-
-const iframeSrc = URL.createObjectURL(
-    new Blob([`<h1>Loading...</h1>`], { type: 'text/html' })
-)
+import { useEffect, useRef } from 'react'
 
 export function RenderHTML({ html }: { html: string }) {
     const ref = useRef<HTMLIFrameElement>(null)
-    const [isReady, setReady] = useState(false)
 
     useEffect(() => {
         const iframe = ref.current
         if (!iframe) return
-        if (isReady) {
-            iframe.contentDocument!.documentElement.innerHTML = html
-            executeScriptsFromElement(iframe.contentDocument!.documentElement)
-        } else {
-            iframe.onload = () => {
-                setReady(true)
-            }
-        }
-    }, [html, isReady])
+
+        iframe.contentDocument!.documentElement.innerHTML = html
+        executeScriptsFromElement(iframe.contentDocument!.documentElement)
+    }, [html])
 
     return (
         <iframe
-            className="w-full h-full"
-            src={iframeSrc}
             ref={ref}
+            className="w-full h-full"
+            src="about:blank"
             // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox
             sandbox="allow-popups-to-escape-sandbox allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation allow-modals allow-same-origin"
         />
