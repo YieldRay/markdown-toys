@@ -14,15 +14,22 @@ export async function readabilityFromURL(url: string) {
     ).then((res) => res.text())
     const doc = parser.parseFromString(html, 'text/html')
 
-    doc.querySelectorAll('a').forEach((a) => {
-        if (a.href) {
-            if (a.href.startsWith(location.href)) {
-                a.href = a.href.replace(location.href, url)
-            } else {
-                a.href = a.href.replace(location.origin, new URL(url).origin)
-            }
-            a.target = '_blank'
+    const replace = (u: string) => {
+        if (u.startsWith(location.href)) {
+            return u.replace(location.href, url)
+        } else {
+            return u.replace(location.origin, new URL(url).origin)
         }
+    }
+
+    doc.querySelectorAll('a').forEach((a) => {
+        if (!a.href) return
+        a.href = replace(a.href)
+        a.target = '_blank'
+    })
+    doc.querySelectorAll('img').forEach((img) => {
+        if (!img.src) return
+        img.src = replace(img.src)
     })
 
     return readability(doc)
