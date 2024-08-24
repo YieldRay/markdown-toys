@@ -13,7 +13,7 @@ export default async function translate(md: string) {
         return translated
     } catch {
         throw new Error(
-            '无法翻译，请关闭翻译开关！原因：接口受限，请稍后再试（可尝试使用 https://yieldray-html2md.web.val.run/ ）'
+            '无法翻译，请关闭翻译开关！原因：接口受限，请稍后再试'
         )
     }
 }
