@@ -12,8 +12,6 @@ export default async function translate(md: string) {
         cache.set(md, translated)
         return translated
     } catch {
-        throw new Error(
-            '无法翻译，请关闭翻译开关！原因：接口受限，请稍后再试'
-        )
+        throw new Error('无法翻译，请关闭翻译开关！原因：接口受限，请稍后再试')
     }
 }
