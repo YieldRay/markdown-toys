@@ -1,8 +1,5 @@
 @import url('https://fonts.upset.dev/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 body {
     margin: 0;
