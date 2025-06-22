@@ -15,7 +15,6 @@ export default function MD2HTML() {
     const [rawHtml, setHtml] = useState('')
     const html = withGfmHTML(rawHtml)
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleConvert = useCallback(async () => {
         setHtml(await md2html(markdown, { allowDangerousHtml: false }))
     }, [markdown])

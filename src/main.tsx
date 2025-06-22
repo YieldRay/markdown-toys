@@ -50,7 +50,7 @@ pages.push({
             {pages
                 .map((p) => p.path!)
                 .map((path) => (
-                    <Link key={path} to={path}>
+                    <Link key={path} to={path} viewTransition>
                         <Card className="p-8" variant="outlined">
                             {path.slice(1)}
                         </Card>

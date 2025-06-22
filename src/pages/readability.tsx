@@ -25,7 +25,9 @@ const STATE = ['html', 'markdown', 'preview'] as const
 export default function HTML2MD() {
     const [searchParams, setSearchParams] = useSearchParams()
     const _url = searchParams.has('url') ? searchParams.get('url')! : INIT_URL
-    const _state = STATE.includes(searchParams.get('state') as any)
+    const _state = STATE.includes(
+        searchParams.get('state') as (typeof STATE)[number]
+    )
         ? (searchParams.get('state') as (typeof STATE)[number])
         : 'markdown'
     const _translate = searchParams.get('translate') === 'true'
@@ -114,7 +116,7 @@ export default function HTML2MD() {
                             value={state}
                             onChange={(value) => {
                                 updateURL()
-                                setState(value as any)
+                                setState(value as (typeof STATE)[number])
                             }}
                         />
                     </div>
