@@ -232,7 +232,7 @@ export default function Root({
                                 ([name, version]) => (
                                     <tr key={name}>
                                         <td>{name}</td>
-                                        <td>{version as string}</td>
+                                        <td>{version}</td>
                                     </tr>
                                 )
                             )}

@@ -63,11 +63,14 @@ pages.push({
 //? pick a router (https://reactrouter.com/en/main/routers/picking-a-router)
 //? by process.env.ROUTER
 const createRouter =
-    new Map<string, typeof createBrowserRouter | typeof createHashRouter>([
+    new Map([
         ['browser', createBrowserRouter],
         ['hash', createHashRouter],
         ['memory', createMemoryRouter],
-    ]).get(process.env.ROUTER!) || createBrowserRouter
+    ] as const).get(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        process.env.ROUTER as any
+    ) || createBrowserRouter
 
 const router = createRouter([
     {
